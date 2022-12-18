@@ -24,7 +24,6 @@ services:
       - 3000
     restart: unless-stopped
     volumes:
-      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
       - ./grafana-data:/var/lib/grafana
     networks:
       - monitoring
