@@ -28,6 +28,7 @@ services:
       - ./grafana-data:/var/lib/grafana
     networks:
       - monitoring
+      - proxy
     labels:
       - "traefik.enable=true"
       - "traefik.http.middlewares.grafana-redirect-websecure.redirectscheme.scheme=https"
@@ -55,4 +56,6 @@ services:
 
 networks:
   monitoring:
+    external: true
+  proxy:
     external: true
