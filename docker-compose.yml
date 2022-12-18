@@ -28,6 +28,18 @@ services:
       - ./grafana-data:/var/lib/grafana
     networks:
       - monitoring
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.grafana-redirect-websecure.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.grafana-redirect-websecure.redirectscheme.permanent=true"
+      - "traefik.http.routers.grafana-web.middlewares=grafana-redirect-websecure"
+      - traefik.http.routers.grafana-web.rule=Host(`grafana.thexiao77.com`)
+      - traefik.http.routers.grafana-web.entrypoints=http
+      - traefik.http.routers.grafana-websecure.rule=Host(`grafana.thexiao77.com`)
+      - traefik.http.routers.grafana-websecure.tls.certresolver=le
+      - traefik.http.routers.grafana-websecure.tls=true
+      - traefik.http.routers.grafana-websecure.entrypoints=https
+      - "traefik.docker.network=proxy"
   cadvisor:
     image: zcube/cadvisor:v0.45.0
     container_name: cadvisor
